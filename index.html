@@ -124,6 +124,53 @@
         .see-more-container {
             text-align: center;
         }
+        .experience {
+            background: #e0e0e0;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 5px solid #999;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .experience:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.12);
+        }
+        .popup-card {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            background: white;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            width: 450px;
+            text-align: left;
+            border-left: 5px solid #777;
+            opacity: 0;
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+        }
+        .popup-card.show {
+            display: block;
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        .close-btn {
+            background: #555;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+            border-radius: 5px;
+            transition: background 0.3s ease-in-out;
+        }
+        .close-btn:hover {
+            background: #777;
+        }
     </style>
 </head>
 <body>
@@ -170,27 +217,60 @@
     
     <section id="experience">
         <h2>Professional Experience</h2>
-        <div class="experience">
+        <div class="experience" onclick="showPopup('Lead Test Engineer', 'BroadPeak Technologies', [
+            'Led the automation team designing and implementing test frameworks for web, mobile, and APIs',
+             'Developed and optimized test automation scripts using Java, C#, and JavaScript',
+              'Implemented RPA solutions using UiPath to enhance business processes.',
+              'Collaborated with cross-functional teams to ensure seamless CI/CD integration.'
+              ])">
             <h3>Lead Test Engineer</h3>
             <p>BroadPeak Technologies | April 2022 to July 2023</p>
         </div>
-        <div class="experience">
+        <div class="experience" onclick="showPopup('Senior Test Automation Engineer', 'Nisum', [
+            'Designed and implemented test suites in JavaScript',
+             'Desinged queries for data testing',
+              'Implemented stored procedures for automation of data testing',
+              'Led a team to ensure product quality, overseeing test suite maintenance'
+              ])">
             <h3>Senior Test Automation Engineer</h3>
-            <p>Nisum | April 2022 to July 2023</p>
-            </div>
-        <div class="experience">
+            <p>Nisum | 2017 - 2020</p>
+        </div>
+        <div class="experience" onclick="showPopup('Software Development Engineer in Test', 'Wiseman Innovations', [
+            'Automated test cases using C# and maintained existing test suites, ensuring consistency and reliability',
+             'Conducted manual testing and added new test cases to the existing framework to enhance coverage.',
+              'Executed automated test cases before every release or update to ensure the quality and accuracy of the delivered build.',
+              'Planned and created automated tests for web applications using Selenium, contributing to faster release cycles.'
+              ])">
             <h3>Software Development Engineer in Test</h3>
             <p>Wiseman Innovations | January 2022 to March 2022</p>
-            </div>
-        <div class="experience">
+        </div>
+        <div class="experience" onclick="showPopup('Senior Quality Assurance Engineer', 'WeRPlay', [
+            'Designed and maintained automation test frameworks for mobile and web applications.',
+             'Conducted API automation testing using Postman and REST Assured',
+              'Integrated automation tests with CI/CD pipelines for continuous testing',
+              'Led test strategy planning and execution for enterprise applications.'])">
             <h3>Senior Quality Assurance Engineer</h3>
             <p>WeRPlay | December 2020 to December 2021</p>
-            </div>
-        <div class="experience">
+        </div>
+        <div class="experience" onclick="showPopup('Software Test Engineer', 'Delta Services Company (Pvt) Ltd', [
+            'Migrated manual test cases to automated scripts using Selenium (Java, C#) and Appium',
+             'Performed mobile testing for iOS and Android applications.',
+              'Developed test scripts for web applications using JavaScript and Cypress'
+              ])">
             <h3>Software Test Engineer</h3>
-            <p>Delta Services Company (Pvt) Ltd | June 2016 to November 2020    </p>
-            </div>
+            <p>Delta Services Company (Pvt) Ltd | June 2016 to November 2020</p>
+        </div>
     </section>
+
+    <div class="popup-card" id="popup">
+        <div class="popup-content">
+            <h2 id="popupTitle"></h2>
+            <p id="popupCompany"></p>
+            <h3>Responsibilities:</h3>
+            <ul id="popupResponsibilities"></ul>
+            <button class="close-btn" onclick="hidePopup()">Close</button>
+        </div>
+    </div>
     
     
     
@@ -226,6 +306,29 @@
                 this.innerText = 'See Less';
             }
         });
+
+        function showPopup(title, company, responsibilities) {
+            let popup = document.getElementById('popup');
+            document.getElementById('popupTitle').innerText = title;
+            document.getElementById('popupCompany').innerText = company;
+            
+            let responsibilitiesList = document.getElementById('popupResponsibilities');
+            responsibilitiesList.innerHTML = '';
+            responsibilities.forEach(res => {
+                let li = document.createElement('li');
+                li.innerText = res;
+                responsibilitiesList.appendChild(li);
+            });
+    
+            popup.style.display = 'block'; // Ensure it's visible before animation
+            setTimeout(() => popup.classList.add('show'), 10);
+        }
+    
+        function hidePopup() {
+            let popup = document.getElementById('popup');
+            popup.classList.remove('show');
+            setTimeout(() => popup.style.display = 'none', 300); // Hide after animation
+        }
     </script>
 </body>
 </html>
